@@ -252,7 +252,7 @@ public class CaptureLayout extends FrameLayout {
         LayoutParams txt_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         txt_param.gravity = Gravity.CENTER_HORIZONTAL;
         txt_param.setMargins(0, 0, 0, 0);
-        txt_tip.setText("单击拍照，长按摄像");
+        txt_tip.setText("Tap to take photo and hold to record video");
         txt_tip.setTextColor(0xFFFFFFFF);
         txt_tip.setGravity(Gravity.CENTER);
         txt_tip.setLayoutParams(txt_param);
@@ -275,7 +275,7 @@ public class CaptureLayout extends FrameLayout {
         btn_cancel.setVisibility(GONE);
         btn_confirm.setVisibility(GONE);
         btn_capture.setVisibility(VISIBLE);
-        txt_tip.setText("单击拍照，长按摄像");
+        txt_tip.setText("Tap to take photo and hold to record video");
         txt_tip.setVisibility(View.VISIBLE);
         if (this.iconLeft != 0)
             iv_custom_left.setVisibility(VISIBLE);
@@ -297,7 +297,7 @@ public class CaptureLayout extends FrameLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                txt_tip.setText("单击拍照，长按摄像");
+                txt_tip.setText("Tap to take photo and hold to record video");
                 txt_tip.setAlpha(1f);
             }
         });

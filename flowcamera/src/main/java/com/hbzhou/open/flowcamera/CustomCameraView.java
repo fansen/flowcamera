@@ -234,7 +234,7 @@ public class CustomCameraView extends FrameLayout {
                 mSwitchCamera.setVisibility(VISIBLE);
 //                mFlashLamp.setVisibility(VISIBLE);
                 mCaptureLayout.resetCaptureLayout();
-                mCaptureLayout.setTextWithAnimation("录制时间过短");
+                mCaptureLayout.setTextWithAnimation("Video must be 3 seconds or more");
                 if (mCameraView.isTakingVideo()) {
                     mCameraView.stopVideo();
                 }
@@ -256,7 +256,7 @@ public class CustomCameraView extends FrameLayout {
             @Override
             public void recordError() {
                 if (flowCameraListener != null) {
-                    flowCameraListener.onError(0, "未知原因!", null);
+                    flowCameraListener.onError(0, "Error", null);
                 }
             }
         });

@@ -196,7 +196,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
 
             @Override
             public void recordShort(final long time) {
-                mCaptureLayout.setTextWithAnimation("录制时间过短");
+                mCaptureLayout.setTextWithAnimation("Video must be 3 seconds or more");
                 mSwitchCamera.setVisibility(VISIBLE);
                 mFlashLamp.setVisibility(VISIBLE);
                 postDelayed(new Runnable() {
