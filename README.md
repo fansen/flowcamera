@@ -1,11 +1,15 @@
 # FlowCamera
 
-[![](https://jitpack.io/v/xionger0520/flowcamera.svg)](https://jitpack.io/#xionger0520/flowcamera) [![API 21+](https://img.shields.io/badge/API-21%2B-green.svg)](https://github.com/xionger0520/flowcamera)
+[![API 21+](https://img.shields.io/badge/API-21%2B-green.svg)](https://jitpack.io/#xionger0520/flowcamera)
+[![](https://jitpack.io/v/xionger0520/flowcamera.svg)](https://jitpack.io/#xionger0520/flowcamera)
+
 
 
 ## 仿微信拍照和拍小视频界面 使用最新的CameraX相机库
-## 适配Android Q存储权限 可以点击拍照长按拍摄小视频
-## 可设置白平衡 HDR 视频拍摄最大时长
+## 适配Android Q存储权限 可以点击拍照长按拍摄小视频也可设置只拍照  只拍视频
+## 可设置白平衡 HDR 视频拍摄最大时长 闪光灯 手势缩放等
+## 有定制需求 有什么PY交易请马上联系我 WeChat:zhouhaibin8357
+## 用了本库的攻城狮们点个star啊 本是同根生 相煎何太急
 
 ### ---清晰的分割线---
 
@@ -38,7 +42,7 @@ allprojects {
 
 dependencies {
 
-	implementation 'com.github.xionger0520:flowcamera:V1.0.8'
+	implementation 'com.github.xionger0520:flowcamera:V1.1.0'
 
 }
 
@@ -107,6 +111,9 @@ val flowCamera = findViewById<CustomCameraView>(R.id.flowCamera)
         flowCamera.setBindToLifecycle(this)
         // 设置白平衡模式
         flowCamera.setWhiteBalance(WhiteBalance.AUTO)
+	// 设置只支持单独拍照拍视频还是都支持
+        // BUTTON_STATE_ONLY_CAPTURE  BUTTON_STATE_ONLY_RECORDER  BUTTON_STATE_BOTH
+        flowCamera.setCaptureMode(BUTTON_STATE_BOTH)
         // 开启HDR
         flowCamera.setHdrEnable(Hdr.ON)
         // 设置最大可拍摄小视频时长

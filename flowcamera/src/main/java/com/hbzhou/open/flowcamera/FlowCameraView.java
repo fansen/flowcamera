@@ -48,6 +48,11 @@ public class FlowCameraView extends FrameLayout {
     private static final int TYPE_FLASH_ON = 0x022;
     private static final int TYPE_FLASH_OFF = 0x023;
     private int type_flash = TYPE_FLASH_OFF;
+
+    // 选择拍照 拍视频 或者都有
+    public static final int BUTTON_STATE_ONLY_CAPTURE = 0x101;      //只能拍照
+    public static final int BUTTON_STATE_ONLY_RECORDER = 0x102;     //只能录像
+    public static final int BUTTON_STATE_BOTH = 0x103;
     //回调监听
     private FlowCameraListener flowCameraListener;
     private ClickListener leftClickListener;
@@ -140,9 +145,6 @@ public class FlowCameraView extends FrameLayout {
                         // If the folder selected is an external media directory, this is unnecessary
                         // but otherwise other apps will not be able to access our images unless we
                         // scan them using [MediaScannerConnection]
-                        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(photoFile.getAbsolutePath().substring(photoFile.getAbsolutePath().lastIndexOf(".") + 1));
-                        MediaScannerConnection.scanFile(
-                                mContext, new String[]{photoFile.getAbsolutePath()}, new String[]{mimeType}, null);
                     }
 
                     @Override
@@ -198,12 +200,6 @@ public class FlowCameraView extends FrameLayout {
                             });
                         }
 
-                        // If the folder selected is an external media directory, this is unnecessary
-                        // but otherwise other apps will not be able to access our images unless we
-                        // scan them using [MediaScannerConnection]
-                        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".") + 1));
-                        MediaScannerConnection.scanFile(
-                                mContext, new String[]{file.getAbsolutePath()}, new String[]{mimeType}, null);
                     }
 
                     @Override
@@ -258,11 +254,13 @@ public class FlowCameraView extends FrameLayout {
                     if (flowCameraListener != null) {
                         flowCameraListener.recordSuccess(videoFile);
                     }
+                    scanPhotoAlbum(videoFile);
                 } else {
                     mPhoto.setVisibility(INVISIBLE);
                     if (flowCameraListener != null) {
                         flowCameraListener.captureSuccess(photoFile);
                     }
+                    scanPhotoAlbum(photoFile);
                 }
             }
         });
@@ -271,6 +269,20 @@ public class FlowCameraView extends FrameLayout {
                 leftClickListener.onClick();
             }
         });
+    }
+
+    /**
+     * 当确认保存此文件时才去扫描相册更新并显示视频和图片
+     *
+     * @param dataFile
+     */
+    private void scanPhotoAlbum(File dataFile) {
+        if (dataFile == null) {
+            return;
+        }
+        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(dataFile.getAbsolutePath().substring(dataFile.getAbsolutePath().lastIndexOf(".") + 1));
+        MediaScannerConnection.scanFile(
+                mContext, new String[]{dataFile.getAbsolutePath()}, new String[]{mimeType}, null);
     }
 
     public File initTakePicPath(Context context) {
@@ -314,6 +326,18 @@ public class FlowCameraView extends FrameLayout {
      */
     public void setRecordVideoMaxTime(int maxDurationTime) {
         mCaptureLayout.setDuration(maxDurationTime * 1000);
+    }
+
+    /**
+     * 设置拍摄模式分别是
+     * 单独拍照 单独摄像 或者都支持
+     *
+     * @param state
+     */
+    public void setCaptureMode(int state) {
+        if (mCaptureLayout != null) {
+            mCaptureLayout.setButtonFeatures(state);
+        }
     }
 
     /**
